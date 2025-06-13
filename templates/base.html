@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>{% block title %}Sistem Pakar{% endblock title %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .main-content-scrollable::-webkit-scrollbar { width: 8px; }
+        .main-content-scrollable::-webkit-scrollbar-thumb { background-color: #a0aec0; }
+    </style>
+    {% block head_extra %}{% endblock head_extra %}
+</head>
+<body class="bg-gray-100 font-inter">
+
+    <div class="relative min-h-screen md:flex">
+
+        <div class="bg-gray-800 text-gray-100 flex justify-between md:hidden">
+            <a href="{{ url_for('home') }}" class="block p-4 text-white font-bold">Sistem Pakar</a>
+            <button id="mobile-menu-button" class="p-4 focus:outline-none focus:bg-gray-700">
+                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+
+        <div id="sidebar" class="bg-gradient-to-r from-blue-500 to-sky-500 text-white w-64 p-6 space-y-6 
+                                absolute inset-y-0 left-0 transform -translate-x-full 
+                                md:relative md:translate-x-0 transition duration-200 ease-in-out 
+                                flex flex-col justify-between z-30">
+            <div>
+                <a href="{{ url_for('home') }}" class="text-white flex items-center space-x-2 px-4 mb-10">
+                    <h2 class="text-2xl font-bold">Sistem Pakar</h2>
+                </a>
+                <nav>
+                    <a href="/home" class="flex items-center gap-2 py-2.5 px-4 rounded-lg transition duration-200 {% if request.path == '/home' or request.path == '/' %}bg-sky-600 font-semibold shadow-md{% else %}hover:bg-sky-400 hover:text-gray-800{% endif %}"><span class="text-lg">🏠</span> Home</a>
+                    <a href="/diagnosa" class="flex items-center gap-2 py-2.5 px-4 rounded-lg transition duration-200 {% if 'diagnosa' in request.path %}bg-sky-600 font-semibold shadow-md{% else %}hover:bg-sky-400 hover:text-gray-800{% endif %}"><span class="text-lg">🩺</span> Diagnosa</a>
+                    <a href="/riwayat" class="flex items-center gap-2 py-2.5 px-4 rounded-lg transition duration-200 {% if 'riwayat' in request.path %}bg-sky-600 font-semibold shadow-md{% else %}hover:bg-sky-400 hover:text-gray-800{% endif %}"><span class="text-lg">📜</span> Riwayat Diagnosa</a>
+                    <a href="/informasi-penyakit" class="flex items-center gap-2 py-2.5 px-4 rounded-lg transition duration-200 {% if 'informasi-penyakit' in request.path %}bg-sky-600 font-semibold shadow-md{% else %}hover:bg-sky-400 hover:text-gray-800{% endif %}"><span class="text-lg">📚</span> Informasi Penyakit</a>
+                    <a href="/statistik" class="flex items-center gap-2 py-2.5 px-4 rounded-lg transition duration-200 {% if 'statistik' in request.path %}bg-sky-600 font-semibold shadow-md{% else %}hover:bg-sky-400 hover:text-gray-800{% endif %}"><span class="text-lg">📊</span> Statistik</a>
+                </nav>
+            </div>
+            <div class="mt-6">
+                <a href="/logout" class="flex items-center gap-2 font-bold text-red-300 hover:text-red-100 p-2 rounded-lg hover:bg-red-500/50 transition-colors duration-200">Logout <span class="text-lg">🚪</span></a>
+            </div>
+        </div>
+
+        <main class="flex-1 p-4 sm:p-6 md:p-10 main-content-scrollable overflow-y-auto">
+            {% block content %}{% endblock content %}
+        </main>
+    </div>
+
+    <script>
+        const btn = document.getElementById('mobile-menu-button');
+        const sidebar = document.getElementById('sidebar');
+
+        btn.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full');
+        });
+    </script>
+    {% block scripts_extra %}{% endblock scripts_extra %}
+</body>
+</html>

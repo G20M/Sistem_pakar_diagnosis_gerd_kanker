@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <title>Pilih Jenis Diagnosa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    inter: ['Inter', 'sans-serif'],
+                },
+            },
+        },
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS untuk memposisikan tombol kembali */
+        /* Pastikan body mengisi seluruh viewport dan memiliki posisi relatif atau flex/grid untuk kontainer utama */
+        body {
+            position: relative; /* Ini penting agar posisi absolut tombol bekerja relatif terhadap body */
+            min-height: 100vh; /* Pastikan body setidaknya mengisi seluruh tinggi viewport */
+            margin: 0;
+            padding: 0;
+            display: flex; /* Menggunakan flexbox untuk menengahkan konten utama */
+            flex-direction: column;
+            align-items: center; /* Pusatkan secara horizontal */
+            justify-content: center; /* Pusatkan secara vertikal */
+        }
+        .back-button-fixed {
+            position: absolute; /* Tombol akan diposisikan secara absolut */
+            top: 20px; /* Jarak dari atas viewport */
+            left: 20px; /* Jarak dari kiri viewport */
+            z-index: 100; /* Pastikan tombol di atas elemen lain */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-inter">
+
+    {# Tombol "Kembali ke Home" yang diposisikan di kiri atas #}
+    <div class="back-button-fixed">
+        <a href="{{ url_for('home') }}" class="inline-flex items-center px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition-colors duration-200">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Kembali ke Home
+        </a>
+    </div>
+
+    {# Konten utama yang tetap di tengah #}
+    <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-xl text-center">
+        <h1 class="text-3xl font-bold text-blue-600 mb-6">Pilih Jenis Diagnosa</h1>
+        <p class="text-gray-600 mb-8">Silakan pilih jenis penyakit yang ingin Anda periksa:</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <a href="{{ url_for('diagnosa_kanker') }}" class="bg-gradient-to-r from-red-500 to-red-600 text-white p-6 rounded-lg shadow-md hover:scale-105 transition-transform duration-300">
+                <h2 class="text-xl font-semibold mb-2">🧬 Diagnosa Kanker</h2>
+                <p class="text-sm">Cek kemungkinan gejala kanker berdasarkan kondisi Anda.</p>
+            </a>
+
+            <a href="{{ url_for('diagnosa_gerd_form') }}" class="bg-gradient-to-r from-lime-500 to-lime-600 text-white p-6 rounded-lg shadow-md hover:scale-105 transition-transform duration-300">
+                <h2 class="text-xl font-semibold mb-2">🔥 Diagnosa GERD</h2>
+                <p class="text-sm">Analisa gejala penyakit GERD Anda.</p>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Informasi Penyakit{% endblock title %}
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">📚 Informasi Penyakit</h1>
+
+    <!-- 🔍 Pencarian -->
+    <div class="mb-8">
+        <input type="text" id="searchInput" onkeyup="searchDisease()" placeholder="Cari penyakit..." class="w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
+    </div>
+
+    <!-- 📋 Daftar Penyakit -->
+    <div id="diseaseList" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- GERD -->
+        <div class="bg-white rounded-xl shadow hover:shadow-xl border overflow-hidden transition" data-title="gerd">
+            <img src="{{ url_for('static', filename='img/gerd.jpg') }}" alt="GERD" class="w-full h-48 object-cover">
+            <div class="p-6">
+                <h2 class="text-2xl font-semibold text-blue-600 mb-1">GERD</h2>
+                <p class="text-gray-600 text-sm mb-4">Penyakit kronis di mana asam lambung naik ke kerongkongan dan menyebabkan rasa panas (heartburn).</p>
+                <ul class="text-gray-700 text-sm list-disc list-inside space-y-1">
+                    <li><span class="font-medium">Gejala:</span> Nyeri dada, mual, asam di mulut</li>
+                    <li><span class="font-medium">Penyebab:</span> Obesitas, pola makan buruk</li>
+                    <li><span class="font-medium">Saran:</span> Hindari makan larut malam, konsultasi dokter</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Maag -->
+        <div class="bg-white rounded-xl shadow hover:shadow-xl border overflow-hidden transition" data-title="maag">
+            <img src="{{ url_for('static', filename='img/maag.jpg') }}" alt="GERD" class="w-full h-48 object-cover">
+            <div class="p-6">
+                <h2 class="text-2xl font-semibold text-green-600 mb-1">Maag (Gastritis)</h2>
+                <p class="text-gray-600 text-sm mb-4">Peradangan pada dinding lambung yang menyebabkan nyeri ulu hati dan perut kembung.</p>
+                <ul class="text-gray-700 text-sm list-disc list-inside space-y-1">
+                    <li><span class="font-medium">Gejala:</span> Kembung, mual, kehilangan nafsu makan</li>
+                    <li><span class="font-medium">Penyebab:</span> Infeksi H. pylori, konsumsi obat NSAID</li>
+                    <li><span class="font-medium">Saran:</span> Hindari makanan pedas & asam, makan teratur</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Asam Lambung -->
+        <div class="bg-white rounded-xl shadow hover:shadow-xl border overflow-hidden transition" data-title="asam lambung">
+            <img src="{{ url_for('static', filename='img/asamlambung.jpg') }}" alt="GERD" class="w-full h-48 object-cover">
+            <div class="p-6">
+                <h2 class="text-2xl font-semibold text-yellow-600 mb-1">Asam Lambung</h2>
+                <p class="text-gray-600 text-sm mb-4">Gangguan akibat peningkatan kadar asam lambung yang menyebabkan ketidaknyamanan di perut.</p>
+                <ul class="text-gray-700 text-sm list-disc list-inside space-y-1">
+                    <li><span class="font-medium">Gejala:</span> Perut perih, begah, sering sendawa</li>
+                    <li><span class="font-medium">Penyebab:</span> Pola makan tidak teratur, stres, rokok</li>
+                    <li><span class="font-medium">Saran:</span> Hindari kopi & makanan asam, kelola stres</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Kanker -->
+        <div class="bg-white rounded-xl shadow hover:shadow-xl border overflow-hidden transition" data-title="kanker">
+            <img src="{{ url_for('static', filename='img/kanker.jpg') }}" alt="GERD" class="w-full h-48 object-cover">
+            <div class="p-6">
+                <h2 class="text-2xl font-semibold text-red-600 mb-1">Kanker</h2>
+                <p class="text-gray-600 text-sm mb-4">Penyakit akibat pertumbuhan sel abnormal yang dapat menyerang organ tubuh dan menyebar.</p>
+                <ul class="text-gray-700 text-sm list-disc list-inside space-y-1">
+                    <li><span class="font-medium">Gejala:</span> Berat badan turun drastis, benjolan, mudah lelah</li>
+                    <li><span class="font-medium">Penyebab:</span> Faktor genetik, rokok, zat kimia berbahaya</li>
+                    <li><span class="font-medium">Saran:</span> Deteksi dini, gaya hidup sehat, periksa rutin</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts_extra %}
+<script>
+function searchDisease() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let cards = document.querySelectorAll("#diseaseList > div");
+
+    cards.forEach(card => {
+        const title = card.getAttribute("data-title");
+        if (title.includes(input)) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
+</script>
+{% endblock scripts_extra %}

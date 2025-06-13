@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Sistem Pakar{% endblock title %}
+
+{% block content %}
+    <h1 class="text-3xl font-inter font-bold mb-2">
+        Selamat datang, <span class="text-blue-600">{{ name }}</span>!
+    </h1>
+    <p class="text-xl font-inter font-normal mb-6 text-gray-600">
+        Sistem Pakar Diagnosa Kanker Dan Gerd.
+    </p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="mb-4 text-sm">
+        {% for category, message in messages %}
+            <li class="{% if category == 'success' %}text-green-500{% elif category == 'error' %}text-red-500{% else %}text-gray-700{% endif %}">
+            {{ message }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    <div class="bg-blue-50 p-6 rounded-lg shadow-sm border border-blue-200 mb-8">
+        <p class="font-inter text-lg text-blue-800 font-semibold leading-relaxed">
+            Penting: Sistem ini hanya alat bantu awal.
+            <br>
+            Selalu konsultasikan hasil Anda dengan dokter untuk diagnosa pasti dan penanganan medis.
+        </p>
+    </div>
+
+    {# Bagian "Mulai Cepat" / Call to Action #}
+    <div class="bg-gradient-to-r from-blue-500 to-sky-500 p-8 rounded-lg shadow-lg text-white text-center mb-8 transform hover:scale-[1.01] transition-transform duration-300 ease-in-out">
+        <h3 class="text-2xl font-bold mb-4">Siap Menganalisa Gejala Anda?</h3>
+        <p class="text-lg mb-6">Dapatkan panduan awal tentang kondisi kesehatan Anda.</p>
+        <a href="/diagnosa" class="inline-block bg-white text-blue-700 font-bold py-3 px-8 rounded-full text-lg shadow-md hover:bg-gray-100 transform hover:scale-105 transition-all duration-300">
+            Mulai Diagnosa Sekarang 🩺
+        </a>
+    </div>
+
+    {# Kartu Ringkasan Cepat / Statistik Pengguna #}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {# Kartu 1: Diagnosa Terakhir #}
+        <div class="bg-gradient-to-r from-blue-500 to-sky-500 p-6 rounded-lg shadow-lg text-white transform hover:scale-[1.02] transition-transform duration-300">
+            <h3 class="text-xl font-semibold mb-3 flex items-center">
+                <span class="mr-2 text-2xl">🗓️</span> Diagnosa Terakhir
+            </h3>
+            <p class="text-white text-base mb-4">Hasil Singkat</p>
+            <a href="/riwayat" class="text-white underline hover:text-gray-100 font-medium flex items-center gap-1">Lihat Detail <span class="text-sm">→</span></a>
+        </div>
+
+        {# Kartu 2: Jumlah Diagnosa #}
+        <div class="bg-gradient-to-r from-blue-500 to-sky-500 p-6 rounded-lg shadow-lg text-white transform hover:scale-[1.02] transition-transform duration-300">
+            <h3 class="text-xl font-semibold mb-3 flex items-center">
+                <span class="mr-2 text-2xl">📊</span> Statistik User
+            </h3>
+            <p class="text-sm text-blue-100">Penyakit yang paling banyak di diagnosis pemakai aplikasi</p>
+            <a href="/statistik" class="text-white underline hover:text-gray-100 font-medium flex items-center gap-1">Lihat Detail <span class="text-sm">→</span></a>
+        </div>
+
+        {# Kartu 3: Informasi Penyakit Populer/Terbaru #}
+        <div class="bg-gradient-to-r from-blue-500 to-sky-500 p-6 rounded-lg shadow-lg text-white transform hover:scale-[1.02] transition-transform duration-300">
+            <h3 class="text-xl font-semibold mb-3 flex items-center">
+                <span class="mr-2 text-2xl">💡</span> Informasi Populer
+            </h3>
+            <p class="text-white text-base mb-2">Apa itu Gerd & Kanker?</p>
+            <a href="/informasi-penyakit" class="text-white underline hover:text-gray-100 font-medium flex items-center gap-1">Baca Selengkapnya <span class="text-sm">→</span></a>
+        </div>
+    </div>
+    {# End of Kartu Ringkasan Cepat #}
+
+    {# Instruksi menu lama #}
+    <div class="bg-white p-6 rounded-lg shadow-sm">
+        <p class="font-inter text-gray-700">Silakan pilih menu di kiri untuk menggunakan sistem pakar.</p>
+    </div>
+{% endblock content %}

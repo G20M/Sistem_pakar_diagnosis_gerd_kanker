@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <!-- [PENTING] Meta viewport untuk memastikan scaling yang benar di mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Diagnosa Kanker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script> <!-- Direkomendasikan untuk label di dalam chart -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- [RESPONSIF] Menggunakan padding yang beradaptasi: p-4 di mobile, sm:p-6, md:p-8 di layar lebih besar -->
+    <div class="container mx-auto p-4 sm:p-6 md:p-8">
+        <div class="max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+
+            <!-- [RESPONSIF] Ukuran judul yang beradaptasi -->
+            <h1 class="text-2xl sm:text-3xl font-bold text-blue-700 mb-4 text-center">Hasil Diagnosa Kanker</h1>
+
+            <!-- [RESPONSIF] Tag hasil yang berpusat dan ukuran font yang disesuaikan -->
+            <div class="text-center mb-6">
+                {% if 'tidak' in hasil|lower %}
+                    <span class="inline-block px-4 py-2 bg-green-100 text-green-800 font-semibold rounded-full text-base sm:text-lg">
+                        ✅ {{ hasil }}
+                    </span>
+                {% else %}
+                    <span class="inline-block px-4 py-2 bg-red-100 text-red-800 font-semibold rounded-full text-base sm:text-lg">
+                        ⚠️ {{ hasil }}
+                    </span>
+                {% endif %}
+            </div>
+
+            <!-- Bagian Detail Hasil -->
+            <div class="space-y-6">
+                <!-- Saran Medis -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Saran Medis:</h2>
+                    <p class="text-gray-700 leading-relaxed">{{ saran }}</p>
+                </div>
+
+                <!-- Rekomendasi Pengobatan -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Rekomendasi Pengobatan:</h2>
+                    <p class="text-gray-700 leading-relaxed">{{ pengobatan }}</p>
+                </div>
+
+                <!-- Yang harus dihindari -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Yang Harus Dihindari:</h3>
+                    <p class="text-gray-700 leading-relaxed">{{ pantangan }}</p>
+                </div>
+            </div>
+
+            <!-- Diagram Pie -->
+            <div class="mt-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 text-center">Ringkasan Jawaban</h2>
+                <!-- [RESPONSIF] Ukuran chart yang beradaptasi, tidak lagi fixed w-64 h-64 -->
+                <div class="w-full max-w-xs mx-auto">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+
+            <!-- [RESPONSIF] Tombol kembali dengan flex-col di mobile agar tersusun rapi -->
+            <div class="text-center mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="/diagnosa/kanker" class="w-full sm:w-auto inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition shadow-md">
+                    🔙 Ulangi Diagnosa
+                </a>
+                <a href="/home" class="w-full sm:w-auto inline-block px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition shadow-md">
+                    🏠 Kembali ke Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie Chart Script -->
+    <script>
+        const ya = JSON.parse('{{ jumlah_ya | tojson | safe }}');
+        const tidak = JSON.parse('{{ jumlah_tidak | tojson | safe }}');
+        const total = ya + tidak;
+
+        const ctx = document.getElementById('pieChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Gejala "Ya"', 'Gejala "Tidak"'],
+                datasets: [{
+                    label: 'Jawaban Gejala',
+                    data: [ya, tidak],
+                    backgroundColor: ['#16a34a', '#dc2626'], // hijau dan merah
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            font: {
+                                size: 14,
+                                family: "'Inter', sans-serif"
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) label += ': ';
+                                if (context.parsed !== null) {
+                                    const percentage = total > 0 ? ((context.parsed / total) * 100).toFixed(1) : 0;
+                                    label += context.parsed + ' (' + percentage + '%)';
+                                }
+                                return label;
+                            }
+                        }
+                    },
+                    // Menggunakan plugin datalabels untuk menampilkan persentase di dalam chart
+                    datalabels: {
+                        color: '#fff',
+                        anchor: 'end',
+                        align: 'start',
+                        offset: -10,
+                        formatter: (value, ctx) => {
+                            let sum = 0;
+                            let dataArr = ctx.chart.data.datasets[0].data;
+                            dataArr.map(data => {
+                                sum += data;
+                            });
+                            let percentage = (value*100 / sum).toFixed(1)+"%";
+                            return value > 0 ? percentage : '';
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 14,
+                        }
+                    }
+                }
+            },
+            // [PENTING] Mendaftarkan plugin
+            plugins: [ChartDataLabels],
+        });
+    </script>
+</body>
+</html>

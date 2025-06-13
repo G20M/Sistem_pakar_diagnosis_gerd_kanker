@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnosa Kanker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Gaya tambahan untuk menyembunyikan pertanyaan */
+        .question-section {
+            display: none; /* Sembunyikan semua pertanyaan secara default */
+        }
+        .question-section.active {
+            display: block; /* Tampilkan pertanyaan yang aktif saja */
+        }
+        body {
+            font-family: "Inter", sans-serif;
+        }
+
+        /* --- Gaya Kustom untuk Progress Bar --- */
+        progress {
+            width: 100%;
+            height: 12px; /* Tinggi bilah progress */
+            -webkit-appearance: none; /* Untuk konsistensi lintas browser */
+            appearance: none;
+            border-radius: 9999px; /* Sudut sangat membulat (ala Tailwind: rounded-full) */
+            overflow: hidden; /* Penting untuk border-radius di dalam */
+        }
+
+        /* Styling untuk webkit (Chrome, Safari) */
+        progress::-webkit-progress-bar {
+            background-color: #e5e7eb; /* bg-gray-200 */
+            border-radius: 9999px;
+        }
+
+        progress::-webkit-progress-value {
+            background-color: #3b82f6; /* bg-blue-500 */
+            border-radius: 9999px;
+            transition: width 0.3s ease-in-out; /* Animasi perubahan progress */
+        }
+
+        /* Styling untuk Firefox */
+        progress::-moz-progress-bar {
+            background-color: #3b82f6; /* bg-blue-500 */
+            border-radius: 9999px;
+            transition: width 0.3s ease-in-out; /* Animasi perubahan progress */
+        }
+        /* --- Akhir Gaya Kustom Progress Bar --- */
+    </style>
+</head>
+<body class="bg-gray-100 p-8 font-sans">
+    <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+
+<div class="mb-4 text-left">
+    <a href="/diagnosa" class=" fixed px-4 py-2 bg-gradient-to-r from-blue-500 to-sky-500 text-white rounded-lg hover:bg-gray-300 transition duration-200 text-sm shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Kembali
+    </a>
+</div>
+        <h1 class="text-3xl font-bold text-blue-700 mb-4 text-center">Diagnosa Kanker</h1>
+
+        <p class="text-gray-600 mb-6 text-center">Jawablah beberapa pertanyaan berikut untuk membantu proses diagnosa.</p>
+
+        <div class="progress-section mb-6">
+            <progress id="progressBar" class="w-full" value="1" max="10"></progress>
+            <p class="text-sm text-gray-500 text-center mt-2" id="progressText">Pertanyaan 1 dari 10</p>
+        </div>
+        <form id="diagnosaForm">
+            <div id="question1" class="question-section active mb-6 p-4 border border-gray-200 rounded-md">
+                <p class="text-lg font-semibold text-gray-800 mb-2">1. Apakah Anda mengalami penurunan berat badan drastis?</p>
+                <select name="q1" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="ya">Ya</option>
+                    <option value="tidak">Tidak</option>
+                </select>
+            </div>
+
+            <div id="question2" class="question-section mb-6 p-4 border border-gray-200 rounded-md">
+                <p class="text-lg font-semibold text-gray-800 mb-2">2. Apakah Anda sering merasa lelah atau lemas tanpa alasan yang jelas?</p>
+                <select name="q2" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="ya">Ya</option>
+                    <option value="tidak">Tidak</option>
+                </select>
+            </div>
+
+            <div id="question3" class="question-section mb-6 p-4 border border-gray-200 rounded-md">
+                <p class="text-lg font-semibold text-gray-800 mb-2">3. Apakah Anda mengalami demam yang tidak diketahui penyebabnya?</p>
+                <select name="q3" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="ya">Ya</option>
+                    <option value="tidak">Tidak</option>
+                </select>
+            </div>
+
+            <div id="question4" class="question-section mb-6 p-4 border border-gray-200 rounded-md">
+                <p class="text-lg font-semibold text-gray-800 mb-2">4. Apakah Anda mengalami nyeri yang tidak kunjung hilang?</p>
+                <select name="q4" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="ya">Ya</option>
+                    <option value="tidak">Tidak</option>
+                </select>
+            </div>
+
+            <div id="question5" class="question-section mb-6 p-4 border border-gray-200 rounded-md">
+                <p class="text-lg font-semibold text-gray-800 mb-2">5. Apakah Anda mengalami perubahan pada kebiasaan buang air besar atau kecil (misalnya diare berkepanjangan atau kesulitan buang air kecil)?</p>
+                <select name="q5" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="ya">Ya</option>
+                    <option value="tidak">Tidak</option>
+                </select>
+            </div>
+
+            <div id="question6" class="question-section mb-6 p-4 border border-gray-200 rounded-md">
+                <p class="text-lg font-semibold text-gray-800 mb-2">6. Apakah Anda mengalami perubahan pada kulit, seperti luka yang tidak sembuh-sembuh?</p>
+                <select name="q6" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="ya">Ya</option>
+                    <option value="tidak">Tidak</option>
+                </select>
+            </div>
+
+            <div id="question7" class="question-section mb-6 p-4 border border-gray-200 rounded-md">
+                <p class="text-lg font-semibold text-gray-800 mb-2">7. Apakah Anda mengalami batuk atau suara serak yang tidak hilang?</p>
+                <select name="q7" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="ya">Ya</option>
+                    <option value="tidak">Tidak</option>
+                </select>
+            </div>
+
+            <div id="question8" class="question-section mb-6 p-4 border border-gray-200 rounded-md">
+                <p class="text-lg font-semibold text-gray-800 mb-2">8. Apakah Anda mengalami kesulitan menelan?</p>
+                <select name="q8" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="ya">Ya</option>
+                    <option value="tidak">Tidak</option>
+                </select>
+            </div>
+
+            <div id="question9" class="question-section mb-6 p-4 border border-gray-200 rounded-md">
+                <p class="text-lg font-semibold text-gray-800 mb-2">9. Apakah Anda mengalami perdarahan atau keluarnya cairan yang tidak biasa?</p>
+                <select name="q9" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="ya">Ya</option>
+                    <option value="tidak">Tidak</option>
+                </select>
+            </div>
+
+            <div id="question10" class="question-section mb-6 p-4 border border-gray-200 rounded-md">
+                <p class="text-lg font-semibold text-gray-800 mb-2">10. Apakah Anda mengalami benjolan atau pembengkakan di bagian tubuh tertentu?</p>
+                <select name="q10" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                    <option value="">-- Pilih --</option>
+                    <option value="ya">Ya</option>
+                    <option value="tidak">Tidak</option>
+                </select>
+            </div>
+
+            <div class="flex justify-between mt-6">
+                <button type="button" id="prevBtn" class="px-6 py-3 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition duration-200 hidden shadow-md">
+                    &lt; Kembali
+                </button>
+                <button type="button" id="nextBtn" class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200 ml-auto shadow-md">
+                    Selanjutnya &gt;
+                </button>
+                <button type="submit" id="submitBtn" class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200 hidden ml-auto shadow-md">
+                    Selesai Diagnosa
+                </button>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button type="button" id="resetDiagnosaBtn" class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-200 shadow-md">
+                    Mulai Ulang Diagnosa
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        const questionSections = document.querySelectorAll('.question-section');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const diagnosaForm = document.getElementById('diagnosaForm');
+        const resetDiagnosaBtn = document.getElementById('resetDiagnosaBtn');
+
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const totalQuestions = questionSections.length;
+
+        let currentQuestionIndex = 0;
+
+        function updateProgressBar() {
+            progressBar.value = currentQuestionIndex + 1;
+            progressBar.max = totalQuestions;
+            progressText.textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${totalQuestions}`;
+        }
+
+        function showQuestion(index) {
+            questionSections.forEach((section, i) => {
+                if (i === index) {
+                    section.classList.add('active');
+                } else {
+                    section.classList.remove('active');
+                }
+            });
+
+            if (currentQuestionIndex === 0) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+
+            if (currentQuestionIndex === totalQuestions - 1) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+
+            updateProgressBar();
+        }
+
+        nextBtn.addEventListener('click', () => {
+            const currentSelect = questionSections[currentQuestionIndex].querySelector('select');
+            if (currentSelect.value === "") {
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50';
+                modal.innerHTML = `
+                    <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm mx-auto text-center">
+                        <p class="text-lg font-semibold mb-4">Mohon pilih jawaban Anda sebelum melanjutkan.</p>
+                        <button id="closeModal" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Oke</button>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                document.getElementById('closeModal').addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+                return;
+            }
+
+            if (currentQuestionIndex < questionSections.length - 1) {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+            }
+        });
+
+        resetDiagnosaBtn.addEventListener('click', () => {
+            questionSections.forEach(section => {
+                const selectElement = section.querySelector('select');
+                selectElement.value = "";
+            });
+
+            currentQuestionIndex = 0;
+            showQuestion(currentQuestionIndex);
+            nextBtn.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
+        });
+
+        diagnosaForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const lastSelect = questionSections[questionSections.length - 1].querySelector('select');
+            if (lastSelect.value === "") {
+                const modal = document.createElement('div');
+                modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50';
+                modal.innerHTML = `
+                    <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm mx-auto text-center">
+                        <p class="text-lg font-semibold mb-4">Mohon pilih jawaban Anda sebelum menyelesaikan diagnosa.</p>
+                        <button id="closeModal" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Oke</button>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                document.getElementById('closeModal').addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+                return;
+            }
+
+            const answers = [];
+            questionSections.forEach(section => {
+                const selectElement = section.querySelector('select');
+                answers.push(selectElement.value);
+            });
+
+            const loadingModal = document.createElement('div');
+            loadingModal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50';
+            loadingModal.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-xl max-w-xs mx-auto text-center">
+                    <svg class="animate-spin h-8 w-8 text-blue-500 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <p class="text-lg font-semibold">Memproses diagnosa...</p>
+                </div>
+            `;
+            document.body.appendChild(loadingModal);
+
+
+            try {
+                const response = await fetch('/diagnosa/kanker/hasil', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ jawaban: answers }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                const params = new URLSearchParams({
+                    hasil: result.hasil,
+                    saran: result.saran,
+                    pengobatan: result.pengobatan,
+                    pantangan: result.pantangan,
+                    jumlah_ya: result.jumlah_ya,
+                    jumlah_tidak: result.jumlah_tidak
+                }).toString();
+
+                window.location.href = `/diagnosa/kanker/hasil/view?${params}`;
+
+            } catch (error) {
+                console.error('Error saat mengirim diagnosa:', error);
+                const errorModal = document.createElement('div');
+                errorModal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50';
+                errorModal.innerHTML = `
+                    <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm mx-auto text-center">
+                        <p class="text-lg font-semibold mb-4 text-red-600">Terjadi kesalahan saat memproses diagnosa.</p>
+                        <p class="mb-4">Silakan coba lagi atau hubungi dukungan.</p>
+                        <button id="closeErrorModal" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Tutup</button>
+                    </div>
+                `;
+                document.body.appendChild(errorModal);
+                document.getElementById('closeErrorModal').addEventListener('click', () => {
+                    document.body.removeChild(errorModal);
+                });
+            } finally {
+                if (document.body.contains(loadingModal)) {
+                    document.body.removeChild(loadingModal);
+                }
+            }
+        });
+
+        showQuestion(currentQuestionIndex);
+    </script>
+</body>
+</html>
